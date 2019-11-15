@@ -1,5 +1,5 @@
 defmodule Resonate.TestApp.Consumer do
-  use Resonate.Manager.BaseConsumer, rate_limit: 5000, demand: 2
+  use Resonate.Manager.BaseConsumer, rate_limit: 5000, demand: 10
 
   def handle_event({:moo, _}) do
     IO.inspect("moo was called from other consumer")

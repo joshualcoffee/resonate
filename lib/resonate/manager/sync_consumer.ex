@@ -12,14 +12,13 @@ defmodule Resonate.Manager.SyncConsumer do
         {:consumer, nil, subscribe_to: [producer]}
       end
 
-      def handle_subscribe(:producer, _opts, from, state) do
+      def handle_subscribe(:producer, _opts, from, _) do
         send(self(), :ask)
         {:manual, from}
       end
 
       def handle_info(:ask, producer) do
         GenStage.ask(producer, @args[:demand])
-        IO.inspect(@args[:rate_limit])
         Process.send_after(self(), :ask, @args[:rate_limit])
 
         {:noreply, [], producer}

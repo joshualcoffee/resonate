@@ -11,10 +11,8 @@ defmodule Resonate.Manager.Producer do
     GenStage.call(producer, {:notify, event}, timeout)
   end
 
-  @spec init(:ok) ::
-          {:producer, {:queue.queue(any), 0}, [{:dispatcher, GenStage.BroadcastDispatcher}, ...]}
   def init(:ok) do
-    {:producer, {:queue.new(), 0}, dispatcher: GenStage.BroadcastDispatcher}
+    {:producer, {:queue.new(), 0}}
   end
 
   def handle_call({:notify, event}, from, {queue, pending_demand}) do
